@@ -75,16 +75,16 @@ Or if you don't want to "build" the project :
 The Discord bot is used to communicate with the Discord API and the Horde AI API. It currently has the following commands:
 
 Decriptions of commands
-`/ia imagine` - Create an image by AI
-`/ia login` - Login to stablehorde.net
-`/ia help` - Show IA help
-`/ia info` - Show user informations
-`/ia logout` - Logout to stablehorde.net
-`/ia ask` - Ask a question to the AI
-`/ia interogate` - Interrogate the AI
-`/ia give` - Give kudos to an user
-`/ia config` - Configure the AI
-`/ia advanced` imagine - Create an image by AI
+1. `/ia imagine` - Create an image by AI
+2. `/ia login` - Login to stablehorde.net
+3. `/ia help` - Show IA help
+4. `/ia info` - Show user informations
+5. `/ia logout` - Logout to stablehorde.net
+6. `/ia ask` - Ask a question to the AI
+7. `/ia interogate` - Interrogate the AI
+8. `/ia give` - Give kudos to an user
+9. `/ia config` - Configure the AI
+10. `/ia advanced` imagine - Create an image by AI
 
 ### Website
 
