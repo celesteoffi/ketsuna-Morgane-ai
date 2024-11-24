@@ -218,7 +218,7 @@ export default async function Imagine(
                           files: generations.map((generation, i) => {
                             return {
                               attachment: generation.img,
-                              name: 'image' + i + '.webp'
+                              name: 'image' + i + '.png'
                             }
                           }),
                           components: []
@@ -328,7 +328,7 @@ export default async function Imagine(
                           status.generations.forEach((generation, i) => {
                             files.push({
                               attachment: generation.img,
-                              name: 'image' + i + '.webp'
+                              name: 'image' + i + '.png'
                             })
                           })
                         }
