@@ -8,8 +8,6 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 - [x] Discord bot
 - [x] REST API
 - [x] Front-end
-- [ ] Database
-- [ ] Docker support
 
 ## Requirements
 
