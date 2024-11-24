@@ -16,7 +16,7 @@ export default function Page() {
         }}
       >
         <Link
-          href="https://discord.com/api/oauth2/authorize?client_id=1100859965616427068&permissions=418829953344&scope=bot+applications.commands"
+          href="https://discord.com/oauth2/authorize?client_id=1190014646351036577&permissions=551903627328&scope=bot"
           style={{ color: "white", textDecoration: "none" }}
         >
           <h2

@@ -22,7 +22,7 @@ export default class Bot extends Client {
     cache: {
       generations_check: 1000 * 30,
     },
-    client_agent: "Ketsuna;Discordbot;1.0.1;",
+    client_agent: "Morgane AI ;Discordbot;1.0.1;",
     default_token: "0000000000",
   });
   commands: Map<string, CommandsBase> = new Map<string, CommandsBase>();
@@ -46,10 +46,10 @@ export default class Bot extends Client {
           {
             name: isDev
               ? "in development"
-              : process.env.DISCORD_STATUS_NAME || "Ketsuna is the Best Bot",
+              : process.env.DISCORD_STATUS_NAME || "Morgane AI  is the Best Bot",
             type: ActivityType.Playing,
             state:
-              process.env.DISCORD_STATUS_STATE || "Ketsuna is the Best Bot",
+              process.env.DISCORD_STATUS_STATE || "Morgane AI  is the Best Bot",
           },
         ],
       },
@@ -73,18 +73,18 @@ export default class Bot extends Client {
           this.channels.fetch("1174557566773252146").then((channel) => {
             if(!channel.isTextBased()) return;
             channel.send({
-              content: `<@${entitlement.userId}> (${user.tag}) has purchased Ketsuna Premium!`,
+              content: `<@${entitlement.userId}> (${user.tag}) has purchased Morgane AI  Premium!`,
             });
           });
   
           // send dm to user
           user.send({
-            content: `If you are not yet in the support server, please join it here: https://discord.gg/wqvBzHe8YQ \n\n This way we can give you your Rewards for suscribing to Ketsuna Premium!`,
+            content: `If you are not yet in the support server, please join it here: https://discord.gg/2U6Q9aKHSE \n\n This way we can give you your Rewards for suscribing to Morgane AI  Premium!`,
             embeds: [
                 {
                   title: "Join the Support Server",
-                  url: "https://discord.gg/wqvBzHe8YQ",
-                  description: `Thank you for purchasing Ketsuna Premium! You need to be Logged in to the bot to use it.\nPlease use </ai login:${this.commands.get("ai").command.id} to login to the bot.`
+                  url: "https://discord.gg/2U6Q9aKHSE",
+                  description: `Thank you for purchasing Morgane AI  Premium! You need to be Logged in to the bot to use it.\nPlease use </ai login:${this.commands.get("ai").command.id} to login to the bot.`
                 }
               ]
           })

@@ -121,7 +121,7 @@ export default async function Imagine(
           clip_skip: config?.clip_skip || 3,
           facefixer_strength: 1,
           steps: config?.steps || 25,
-          n: config?.gen_numbers || 4
+          n: config?.gen_numbers || 10
         },
         censor_nsfw: nsfwchannel ? (!nsfw) : true,
         models: [model],
