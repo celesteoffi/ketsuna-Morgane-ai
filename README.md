@@ -15,7 +15,7 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 - [Prisma](https://www.prisma.io/) (v3.0.0 or higher)
 - [PNPM](https://pnpm.io/) (v6.0.0 or higher)
 
-# Ubuntu / Debian
+### Ubuntu / Debian
 
 1. Node.js 
 	- Check to be well In your original directory `cd ~`
