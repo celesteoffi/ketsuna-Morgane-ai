@@ -24,10 +24,14 @@ Invitation link: https://discord.com/oauth2/authorize?client_id=1190014646351036
 ### Ubuntu / Debian
 
 1. Node.js 
-	- Check to be well In your original directory `cd ~`
-	- use curl to retrieve nodejs version 20 installation script `curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh`
-	- Inspect the contents of the downloaded script with nano (or your favorite text editor): `nano nodesource_setup.sh`
-	- You can now install the Node.js package the same way you did in the previous section: `sudo apt install nodejs`
+	- Check to be well In your original directory 
+	- `cd ~`
+	- use curl to retrieve nodejs version 20 installation script 
+	- `curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh`
+	- Inspect the contents of the downloaded script with nano (or your favorite text editor): 
+	-`nano nodesource_setup.sh`
+	- You can now install the Node.js package the same way you did in the previous section: 
+	-`sudo apt install nodejs`
 
 2. Prisma
 	- Normally no manual installation required
