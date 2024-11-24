@@ -18,17 +18,17 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 ### Ubuntu / Debian
 
 1. Node.js 
-	- Check to be well In your original directory `cd ~`
-	- use curl to retrieve nodejs version 20 installation script `curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh`
-	- Inspect the contents of the downloaded script with nano (or your favorite text editor): `nano nodesource_setup.sh`
-	- You can now install the Node.js package the same way you did in the previous section: `sudo apt install nodejs`
+	- Check to be well In your original directory ```env cd ~```
+	- use curl to retrieve nodejs version 20 installation script ```env curl -sL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh```
+	- Inspect the contents of the downloaded script with nano (or your favorite text editor): ```env nano nodesource_setup.sh```
+	- You can now install the Node.js package the same way you did in the previous section: ```env sudo apt install nodejs```
 
 2. Prisma
 	- Normally no manual installation required
 
 3. 
 	- regular version of pnpm, which needs Node.js to work.
-	- `npm install -g pnpm or npm install -g @pnpm/exe`
+	- ```env npm install -g pnpm or npm install -g @pnpm/exe```
 
 
 Now you can follow the installation instructions
