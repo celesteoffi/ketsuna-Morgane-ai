@@ -30,6 +30,8 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 	- regular version of pnpm, which needs Node.js to work.
 	- `npm install -g pnpm or npm install -g @pnpm/exe`
 
+4. I advise you to install pm2 
+	- `npm install pm2 -g`
 
 Now you can follow the installation instructions
 
@@ -70,9 +72,19 @@ Or if you don't want to "build" the project :
 
 ### Discord bot
 
-The Discord bot is used to communicate with the Discord API. It currently has the following commands:
-/ai imagine `text` `[nsfw]` (Used to determine if it's NSFW or not, don't work outside of NSFW channels) `model` (The model to use, default is `deliberate`) `negative_prompt` (The prompt to filter what you don't want)
-/ia login (Used to login to the AI Horde API, you need to have an account on the [AI Horde](https://stablehorde.net/) website)
+The Discord bot is used to communicate with the Discord API and the Horde AI API. It currently has the following commands:
+
+Decriptions of commands
+`/ia imagine` - Create an image by AI
+`/ia login` - Login to stablehorde.net
+`/ia help` - Show IA help
+`/ia info` - Show user informations
+`/ia logout` - Logout to stablehorde.net
+`/ia ask` - Ask a question to the AI
+`/ia interogate` - Interrogate the AI
+`/ia give` - Give kudos to an user
+`/ia config` - Configure the AI
+`/ia advanced` imagine - Create an image by AI
 
 ### Website
 
