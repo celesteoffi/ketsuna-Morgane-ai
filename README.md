@@ -3,6 +3,12 @@
 This is the full back-end and front-end of Ketsuna. It is a REST API built with [Node.js](https://nodejs.org/en/) and [Fastify](https://www.fastify.io/). It also contains a [Discord bot](https://discord.com/developers/docs/intro) that is used to communicate with the Discord API.
 The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://nextjs.org/).
 
+# Morgane Ai Information : 
+
+Support : https://discord.gg/2U6Q9aKHSE
+Top.gg : https://top.gg/fr/bot/1190014646351036577
+Invitation link: https://discord.com/oauth2/authorize?client_id=1190014646351036577&permissions=551903627328&scope=bot
+
 ## Features
 
 - [x] Discord bot
