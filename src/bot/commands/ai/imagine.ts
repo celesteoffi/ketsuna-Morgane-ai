@@ -258,7 +258,7 @@ export default async function Imagine(
                       processed +=
                         bt.__(
                           {
-                            phrase: '(Position in the queue: %s -',
+                            phrase: '(Position in the queue: %s )',
                             locale: interaction.locale
                           },
                           String(stat.queue_position)

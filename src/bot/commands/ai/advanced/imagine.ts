@@ -79,7 +79,7 @@ export default async function AdvancedImagine(
       options.getString("sampler_name") ||
       ModelGenerationInputStableSamplers.k_dpm_adaptive;
     let n =
-      (options.getNumber("n") || 4) > 10 ? 10 : options.getNumber("n") || 4;
+      (options.getNumber("n") || 10) > 10 ? 10 : options.getNumber("n") || 10;
     let loras = options.getString("loras") || null;
     if (image) {
       let textChannel =

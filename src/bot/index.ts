@@ -70,7 +70,7 @@ export default class Bot extends Client {
         this.on(Events.EntitlementCreate, async (entitlement) => {
           let user = await entitlement.fetchUser()
           // send message on support server
-          this.channels.fetch("1174557566773252146").then((channel) => {
+          this.channels.fetch("1308754491134316564").then((channel) => {
             if(!channel.isTextBased()) return;
             channel.send({
               content: `<@${entitlement.userId}> (${user.tag}) has purchased Morgane AI  Premium!`,
