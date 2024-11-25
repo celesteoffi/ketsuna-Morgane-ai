@@ -217,7 +217,7 @@ export default async function AdvancedImagine(
                       processed +=
                         bt.__(
                           {
-                            phrase: "(Position in the queue: %s -",
+                            phrase: "(Position in the queue: %s )",
                             locale: interaction.locale,
                           },
                           String(stat.queue_position),
