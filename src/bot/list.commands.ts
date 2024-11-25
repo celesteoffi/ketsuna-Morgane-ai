@@ -5,3 +5,4 @@ export * from "./commands/ping";
 export * from "./commands/avatar";
 export * from "./commands/botinfo";
 export * from "./commands/serverinfo";
+export * from "./commands/vote";

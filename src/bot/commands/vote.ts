@@ -11,10 +11,10 @@ import Bot from "../index";
 import { bt } from "../../main";
 
 const commandData = new SlashCommandBuilder()
-  .setName("luck")
-  .setDescription("your luck")
+  .setName("vote")
+  .setDescription("vote")
 
-export class luckCommand extends CommandsBase {
+export class GayCommand extends CommandsBase {
   constructor(client: Bot) {
     super(client, commandData.toJSON());
   }
@@ -24,7 +24,7 @@ export class luckCommand extends CommandsBase {
   const randomPercentage = Math.floor(Math.random() * 101); 
   i.edit({
     content: bt.__({
-      phrase: "Your luck and %s%",
+      phrase: "https://top.gg/fr/bot/1190014646351036577",
       locale: interaction.locale,
     }, randomPercentage.toString()),
   });
