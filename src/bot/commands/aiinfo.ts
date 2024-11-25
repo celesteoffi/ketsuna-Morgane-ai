@@ -1,5 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
-import https from "https";
+import https from "https"; // Module natif de Node.js
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
 
@@ -13,8 +13,9 @@ export class AIInfoCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction): Promise<void> {
-    await interaction.deferReply();
+    await interaction.deferReply(); // Indique que le bot traite la commande
 
+    // Fonction pour effectuer la requête HTTPS
     const fetchAPI = (url: string): Promise<any> =>
       new Promise((resolve, reject) => {
         https.get(url, (res) => {
@@ -36,32 +37,26 @@ export class AIInfoCommand extends CommandsBase {
         });
       });
 
-    const updateEmbed = async () => {
-      try {
-        const data = await fetchAPI("https://stablehorde.net/api/v2/status/performance");
+    try {
+      const data = await fetchAPI("https://stablehorde.net/api/v2/status/performance");
 
-        const embed = new EmbedBuilder()
-          .setTitle("AI Performance Information (Auto-updating)")
-          .setColor(0x00ff00)
-          .addFields(
+      const embed = new EmbedBuilder()
+        .setTitle("AI Performance Information")
+        .setColor(0x00ff00) // Couleur verte
+        .addFields(
             { name: "Queued Requests", value: data.queued_requests.toString(), inline: true },
             { name: "Number of active Image workers", value: data.worker_count.toString(), inline: true },
             { name: "Number of active Text Workers", value: data.text_worker_count.toString(), inline: true }
         )
-          .setFooter({ text: "Data provided by Stable Horde API" })
-          .setTimestamp();
+        .setFooter({ text: "Data provided by Stable Horde API" })
+        .setTimestamp();
 
-        await interaction.editReply({ embeds: [embed] });
-      } catch (error) {
-        console.error("Error fetching AI info:", error);
-        await interaction.editReply({
-          content: "Unable to fetch AI information. Please try again later.",
-        });
-      }
-    };
-
-    // Démarrer l'actualisation permanente
-    updateEmbed(); // Mise à jour initiale
-    setInterval(updateEmbed, 8000); // Mise à jour toutes les 8 secondes
+      await interaction.editReply({ embeds: [embed] });
+    } catch (error) {
+      console.error("Error fetching AI info:", error);
+      await interaction.editReply({
+        content: "Unable to fetch AI information. Please try again later.",
+      });
+    }
   }
 }
