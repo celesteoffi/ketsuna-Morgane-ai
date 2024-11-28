@@ -52,7 +52,7 @@ client.once("ready", () => {
 // Gestion des messages
 client.on("messageCreate", async (message) => {
   // Log des messages reçus
-  console.log(`Message reçu: ${message.content}`);
+  //console.log(`Message reçu: ${message.content}`);
 
   // Ignorer les messages du bot lui-même
   if (message.author.bot) return;
