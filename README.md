@@ -64,6 +64,7 @@ Now you can follow the installation instructions
 4. Run the database migrations with `pnpm migrate` (this will create the database tables)
 5. Build the project with `pnpm build`
 6. Run the project with `pnpm start` or `node dist/main.js` or with pm2 `pm2 start npm --name "your-app-name" -- start`
+6. Run the project with Shards with `node dist/shard.js` or with pm2 `pm2 start dist/shard.js --name "shardingstarting" -- start`
 
 ## Updating
 
