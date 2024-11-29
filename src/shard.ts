@@ -78,62 +78,25 @@ client.on("messageCreate", async (message) => {
 
   // Commande `!shard`
   if (message.content === "!shard") {
-    // Vérifie si l'utilisateur est whitelisté
-    if (message.author.id !== OWNER_ID) {
-      return message.reply("You do not have permission to use this command.");
-    }
+    const shardInfo = await manager.broadcastEval(client => ({
+      id: client.shard?.ids[0],
+      guilds: client.guilds.cache.size,
+      members: client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0),
+    }));
 
-    // Collecte des informations sur les shards
-    let shardDetails = "";
-    shardStatuses.forEach((status, index) => {
-      shardDetails += `**Shard ${index}:** ${status} - ${client.guilds.cache.filter((guild) => guild.shard.id === index).size} servers\n`;
-    });
-
-    // Création de l'embed
     const embed = new EmbedBuilder()
       .setTitle("Shard Information")
-      .setDescription(shardDetails)
-      .setColor("Purple");
+      .setColor("Blue");
 
-    await message.reply({ embeds: [embed] });
-  }
-
-  // Commande `!shardinfo`
-  if (message.content === "!shardinfo") {
-    // Vérifie si l'utilisateur est whitelisté
-    if (message.author.id !== OWNER_ID) {
-      return message.reply("You do not have permission to use this command.");
-    }
-
-    // Collecte des informations détaillées sur les shards
-    let shardDetails = "";
-    shardStatuses.forEach((status, index) => {
-      const guildCount = client.guilds.cache.filter((guild) => guild.shard.id === index).size;
-      const memberCount = client.guilds.cache.filter((guild) => guild.shard.id === index).reduce((acc, guild) => acc + guild.memberCount, 0);
-      shardDetails += `**Shard ${index}:** Status: ${status} | Servers: ${guildCount} | Members: ${memberCount}\n`;
+    shardInfo.forEach(info => {
+      embed.addFields([
+        {
+          name: `Shard ${info.id}`,
+          value: `Status: ${shardStatuses[info.id] || "Unknown"}\nServers: ${info.guilds}\nMembers: ${info.members}`,
+          inline: true,
+        },
+      ]);
     });
-
-    // Création de l'embed
-    const embed = new EmbedBuilder()
-      .setTitle("Shard Detailed Information")
-      .setDescription(shardDetails)
-      .setColor("Purple");
-
-    await message.reply({ embeds: [embed] });
-  }
-
-  // Commande `!statusshard`
-  if (message.content === "!statusshard") {
-    // Vérifie si l'utilisateur est whitelisté
-    if (message.author.id !== OWNER_ID) {
-      return message.reply("You do not have permission to use this command.");
-    }
-
-    // Création de l'embed pour le statut de chaque shard
-    const embed = new EmbedBuilder()
-      .setTitle("Shard Status")
-      .setDescription(shardStatuses.map((status, index) => `**Shard ${index}:** ${status}`).join("\n"))
-      .setColor("Purple");
 
     await message.reply({ embeds: [embed] });
   }
@@ -155,39 +118,75 @@ client.on("messageCreate", async (message) => {
       .setTitle("Servers Managed by Each Shard")
       .setColor("Purple");
 
-    // Créer un tableau pour stocker les noms des shards et leurs serveurs
-    let shardDetails = '';
-
     serverList.forEach((servers, index) => {
-      const shardTitle = `**Shard ${index}**:`;
-      const shardServers = servers.length > 0 ? servers.join(", ") : "No servers managed";
-      shardDetails += `${shardTitle} ${shardServers}\n\n`;
+      embed.addFields({
+        name: `Shard ${index}`,
+        value: servers.length > 0 ? servers.join("\n") : "No servers managed",
+        inline: false,
+      });
     });
-
-    embed.setDescription(shardDetails);
 
     await message.reply({ embeds: [embed] });
   }
 
-  // Commande `!restartshard`
+  // Commande `!shardinfo`
+  if (message.content === "!shardinfo") {
+    const shardInfo = await manager.broadcastEval(client => ({
+      id: client.shard?.ids[0],
+      guilds: client.guilds.cache.size,
+      members: client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0),
+    }));
+
+    const embed = new EmbedBuilder()
+      .setTitle("Detailed Shard Information")
+      .setColor("Green");
+
+    shardInfo.forEach(info => {
+      embed.addFields([
+        {
+          name: `Shard ${info.id}`,
+          value: `Servers: ${info.guilds}\nMembers: ${info.members}`,
+          inline: true,
+        },
+      ]);
+    });
+
+    await message.reply({ embeds: [embed] });
+  }
+
+  // Commande `!statusshard`
+  if (message.content === "!statusshard") {
+    const embed = new EmbedBuilder()
+      .setTitle("Shard Status")
+      .setColor("Yellow");
+
+    shardStatuses.forEach((status, id) => {
+      embed.addFields([{ name: `Shard ${id}`, value: `Status: ${status}`, inline: true }]);
+    });
+
+    await message.reply({ embeds: [embed] });
+  }
+
+  // Commande `!restartshard <id>`
   if (message.content.startsWith("!restartshard")) {
-    // Vérifie si l'utilisateur est whitelisté
-    if (message.author.id !== OWNER_ID) {
-      return message.reply("You do not have permission to use this command.");
-    }
-
     const args = message.content.split(" ");
-    const shardId = parseInt(args[1]);
-
-    if (isNaN(shardId) || shardId < 0 || shardId >= shardCount) {
-      return message.reply("Invalid shard ID.");
+    if (args.length !== 2 || isNaN(Number(args[1]))) {
+      return message.reply("Usage: `!restartshard <id>` where `<id>` is the ID of the shard to restart.");
     }
 
-    // Redémarrer le shard spécifique
-    manager.shards.get(shardId)?.kill();
-    manager.shards.get(shardId)?.spawn();
+    const shardId = parseInt(args[1], 10);
+    if (shardId < 0 || shardId >= shardCount) {
+      return message.reply("The shard ID is invalid.");
+    }
 
-    await message.reply(`Shard ${shardId} has been restarted.`);
+    try {
+      await manager.shards.get(shardId)?.respawn();
+      shardStatuses[shardId] = "Restarting";
+      message.reply(`Shard ${shardId} has been successfully restarted.`);
+    } catch (error) {
+      console.error(`Error while restarting shard ${shardId}:`, error);
+      message.reply(`Error while restarting shard ${shardId}.`);
+    }
   }
 
   // Commande `!helpshard`
@@ -199,7 +198,7 @@ client.on("messageCreate", async (message) => {
     embed.addFields(
       {
         name: "!shard",
-        value: "Displays shard information, including status, number of servers.",
+        value: "Displays shard information, including status, number of servers, and members.",
         inline: false,
       },
       {
@@ -210,11 +209,6 @@ client.on("messageCreate", async (message) => {
       {
         name: "!statusshard",
         value: "Displays the status of all shards.",
-        inline: false,
-      },
-      {
-        name: "!srvshard",
-        value: "Lists all the servers managed by each shard.",
         inline: false,
       },
     );
