@@ -45,10 +45,6 @@ export class HelpCommand extends CommandsBase {
         name: "/ai help",
         description: "Show IA help",
       },
-      {
-        name: "!helpshard",
-        description: "available shard commands",
-      },
       // Ajoutez d'autres commandes ici
     ];
 
