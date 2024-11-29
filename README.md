@@ -59,10 +59,10 @@ Now you can follow the installation instructions
     # Config the Discord Status
     DISCORD_STATUS_NAME=The best Bot ever
     DISCORD_STATUS_STATE=The Best AI Bot
-	# Number of servers per shard, 15 is the default number and it is recommended to put 15 to 200 servers per shard for optimal operation
-	SERVERS_PER_SHARD=15
-	# Owner ID for whitelist command
-	OWNER_ID=
+    # Number of servers per shard, 15 is the default number and it is recommended to put 15 to 200 servers per shard for optimal operation
+    SERVERS_PER_SHARD=15
+    # Owner ID for whitelist command
+    OWNER_ID=
 ```
 
 4. Run the database migrations with `pnpm migrate` (this will create the database tables)
