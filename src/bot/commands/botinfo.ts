@@ -1,10 +1,10 @@
-import { CommandInteraction, SlashCommandBuilder } from "discord.js";
+import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
 
 const commandData = new SlashCommandBuilder()
   .setName("botinfo")
-  .setDescription("Shows information about the bot");
+  .setDescription("Displays detailed information about the bot.");
 
 export class BotInfoCommand extends CommandsBase {
   constructor(client: Bot) {
@@ -12,18 +12,61 @@ export class BotInfoCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction) {
-    const bot = interaction.client.user;
-    const createdAt = bot?.createdAt.toDateString();
+    const bot = interaction.client.user!;
+    const botCreatedAt = bot.createdAt.toDateString();
     const uptime = Math.floor(interaction.client.uptime! / 1000);
     const serverCount = interaction.client.guilds.cache.size;
+    const totalUsers = interaction.client.guilds.cache.reduce(
+      (acc, guild) => acc + guild.memberCount,
+      0
+    );
+    const totalChannels = interaction.client.channels.cache.size;
+    const totalRoles = interaction.client.guilds.cache.reduce(
+      (acc, guild) => acc + guild.roles.cache.size,
+      0
+    );
+    const totalEmojis = interaction.client.emojis.cache.size;
+    const boostCount = interaction.client.guilds.cache.reduce(
+      (acc, guild) => acc + guild.premiumSubscriptionCount!,
+      0
+    );
 
-    await interaction.reply({
-      content: `Bot Info:
-      - Name: ${bot?.username}
-      - ID: ${bot?.id}
-      - Created on: ${createdAt}
-      - Uptime: ${uptime}s
-      - Servers: ${serverCount}`,
-    });
+    const developerName = "Céleste";
+    const developerId = "1185603511577235572";
+    const developerCreatedAt = "16 déc. 2023"; // Remplacez par la date réelle si connue
+
+    const shardId = interaction.guild?.shardId ?? 0; // Identifiant de la shard où la commande est exécutée
+
+    const hosting = "Célesta Games";
+    const nodeVersion = process.version;
+    const programmingLanguage = "TypeScript";
+    const ping = Math.round(interaction.client.ws.ping);
+
+    const embed = new EmbedBuilder()
+      .setTitle("📊 Bot Information")
+      .setColor("Blurple")
+      .addFields(
+        {
+          name: "👤 Developer Information",
+          value: `**Name:** ${developerName}\n**ID:** ${developerId}\n**Account Created:** ${developerCreatedAt}`,
+        },
+        {
+          name: "📋 General Information",
+          value: `**Bot Name:** ${bot.username}\n**ID:** ${bot.id}\n**Servers:** ${serverCount}\n**Users:** ${totalUsers}\n**Uptime:** ${uptime}s`,
+        },
+        {
+          name: "🔧 Complementary Information",
+          value: `**Roles:** ${totalRoles}\n**Channels:** ${totalChannels}\n**Boosts:** ${boostCount}\n**Emojis:** ${totalEmojis}\n**Shard ID:** ${shardId}`,
+        },
+        {
+          name: "💻 Technical Information",
+          value: `**Hosting:** ${hosting}\n**Node.js Version:** ${nodeVersion}\n**Programming Language:** ${programmingLanguage}\n**Bot Ping:** ${ping}ms`,
+        }
+      )
+      .setThumbnail(bot.displayAvatarURL())
+      .setTimestamp()
+      .setFooter({ text: "Requested by " + interaction.user.username, iconURL: interaction.user.displayAvatarURL() });
+
+    await interaction.reply({ embeds: [embed] });
   }
 }
