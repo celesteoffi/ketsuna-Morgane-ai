@@ -5,21 +5,21 @@ import { AppRouterCacheProvider } from "@mui/material-nextjs/v14-appRouter";
 
 export const metadata: Metadata = {
   title: {
-    default: "Morgane Ai - The AI Discord Bot",
-    template: "%s | Morgane Ai",
+    default: "Ketsuna - The AI Discord Bot",
+    template: "%s | Ketsuna",
   },
   description:
-    "Morgane Ai is a Discord bot that uses AI to generates Images, Texts, and more!",
-  metadataBase: new URL("http://2.7.25.92:3000/"),
+    "Ketsuna is a Discord bot that uses AI to generates Images, Texts, and more!",
+  metadataBase: new URL("https://ketsuna.com"),
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    url: "https://Morgane Ai.com",
-    siteName: "Morgane Ai",
-    title: "Morgane Ai - The AI Discord Bot",
+    url: "https://ketsuna.com",
+    siteName: "Ketsuna",
+    title: "Ketsuna - The AI Discord Bot",
     description:
-      "Morgane Ai is a Discord bot that uses AI to generates Images, Texts, and more!",
-    emails: ["contact@hohotutecalme.fr"],
+      "Ketsuna is a Discord bot that uses AI to generates Images, Texts, and more!",
+    emails: ["contact@kestsuna.com"],
     countryName: "France",
   },
 };

@@ -30,8 +30,9 @@ if (!OWNER_ID) {
 const shardCount = Math.max(1, Math.ceil(GUILD_COUNT / SERVERS_PER_SHARD));
 console.log(`[ShardManager] Calculated number of shards: ${shardCount} shard(s) needed.`);
 
-// Variables pour suivre les états des shards
+// Variables pour suivre les états des shards et la whitelist
 const shardStatuses: string[] = new Array(shardCount).fill("Unknown");
+const whitelist: Set<string> = new Set();  // Stocke les utilisateurs whitelistés
 
 // Initialisation du ShardingManager
 const manager = new ShardingManager("./dist/main.js", {
@@ -76,7 +77,134 @@ client.once("ready", () => {
 client.on("messageCreate", async (message) => {
   if (message.author.bot) return;
 
-  // Commande `!shard`
+  // Commande `!help` - Affiche la liste des commandes disponibles
+  if (message.content === "!shhelp") {
+    const embed = new EmbedBuilder()
+      .setTitle("Available Commands")
+      .setColor("Green")
+      .setDescription(
+        "Here are the commands you can use:\n\n" +
+        "**!addwhitelist <user_id>**: Adds a user to the whitelist (Owner only).\n" +
+        "**!removewhitelist <user_id>**: Removes a user from the whitelist (Owner only).\n" +
+        "**!listwhitelist**: Lists all users in the whitelist (Owner only).\n" +
+        "**!restartshard <id>**: Restarts a specific shard (whitelisted users only).\n" +
+        "**!shardstart**: Starts a new shard (whitelisted users only).\n" +
+        "**!shard**: Displays information about all shards.\n" +
+        "**!srvshard**: Lists servers managed by each shard (Owner only)."
+      )
+      .setFooter({ text: "Use each command with the correct format." });
+
+    message.reply({ embeds: [embed] });
+  }
+
+  // Commande `!addwhitelist <user_id>` - Ajouter un utilisateur à la whitelist
+  if (message.content.startsWith("!addwhitelist")) {
+    const args = message.content.split(" ");
+    if (args.length !== 2 || !args[1].match(/\d{18}/)) {
+      return message.reply("Usage: `!addwhitelist <user_id>` where `<user_id>` is the ID of the user to whitelist.");
+    }
+
+    const userId = args[1];
+    if (message.author.id !== OWNER_ID) {
+      return message.reply("You do not have permission to use this command.");
+    }
+
+    whitelist.add(userId);
+    return message.reply(`${userId} has been added to the whitelist.`);
+  }
+
+  // Commande `!removewhitelist <user_id>` - Retirer un utilisateur de la whitelist
+  if (message.content.startsWith("!removewhitelist")) {
+    const args = message.content.split(" ");
+    if (args.length !== 2 || !args[1].match(/\d{18}/)) {
+      return message.reply("Usage: `!removewhitelist <user_id>` where `<user_id>` is the ID of the user to remove.");
+    }
+
+    const userId = args[1];
+    if (message.author.id !== OWNER_ID) {
+      return message.reply("You do not have permission to use this command.");
+    }
+
+    whitelist.delete(userId);
+    return message.reply(`${userId} has been removed from the whitelist.`);
+  }
+
+  // Commande `!listwhitelist` - Liste des utilisateurs whitelistés
+  if (message.content === "!listwhitelist") {
+    if (message.author.id !== OWNER_ID) {
+      return message.reply("You do not have permission to use this command.");
+    }
+
+    if (whitelist.size === 0) {
+      return message.reply("The whitelist is empty.");
+    }
+
+    const whitelistList = Array.from(whitelist).join("\n");
+    return message.reply(`Users in the whitelist:\n${whitelistList}`);
+  }
+
+  // Commande `!restartshard <id>` - Redémarrer un shard spécifique (requiert la whitelist)
+  if (message.content.startsWith("!restartshard")) {
+    const args = message.content.split(" ");
+    if (args.length !== 2 || isNaN(Number(args[1]))) {
+      return message.reply("Usage: `!restartshard <id>` where `<id>` is the ID of the shard to restart.");
+    }
+
+    const shardId = parseInt(args[1], 10);
+    if (shardId < 0 || shardId >= shardCount) {
+      return message.reply("The shard ID is invalid.");
+    }
+
+    // Vérification de la whitelist
+    if (!whitelist.has(message.author.id)) {
+      return message.reply("You do not have permission to restart shards.");
+    }
+
+    try {
+      await manager.shards.get(shardId)?.respawn();
+      shardStatuses[shardId] = "Restarting";
+      message.reply(`Shard ${shardId} has been successfully restarted.`);
+    } catch (error) {
+      console.error(`Error while restarting shard ${shardId}:`, error);
+      message.reply(`Error while restarting shard ${shardId}.`);
+    }
+  }
+
+// Commande `!shardstart` - Lancer une nouvelle shard
+if (message.content === "!shardstart") {
+  // Vérification de la whitelist
+  if (message.author.id !== OWNER_ID) {
+    return message.reply("You do not have permission to use this command.");
+  }
+
+  try {
+    // Vérification du nombre actuel de shards
+    const currentShardCount = shardStatuses.length;
+    const newShardId = currentShardCount; // ID de la nouvelle shard est basé sur le nombre actuel de shards
+
+    // Si le nombre de shards déjà lancés est égal à celui calculé initialement, il faut redémarrer ou ajouter
+    if (currentShardCount < shardCount) {
+      shardStatuses.push("Launching"); // Marquer la nouvelle shard comme en cours de lancement
+
+      // Lancer la nouvelle shard
+      await manager.spawn({ delay: 5500, timeout: 30000 });
+
+      // Mettre à jour le statut de la shard
+      shardStatuses[newShardId] = "Online";
+
+      message.reply(`Shard ${newShardId} has been successfully started.`);
+    } else {
+      message.reply("The maximum number of shards has already been reached.");
+    }
+  } catch (error) {
+    console.error("Error while starting a new shard:", error);
+    message.reply("Error while starting a new shard.");
+  }
+}
+
+
+
+  // Commande `!shard` - Affiche les informations sur les shards
   if (message.content === "!shard") {
     const shardInfo = await manager.broadcastEval(client => ({
       id: client.shard?.ids[0],
@@ -93,152 +221,31 @@ client.on("messageCreate", async (message) => {
         {
           name: `Shard ${info.id}`,
           value: `Status: ${shardStatuses[info.id] || "Unknown"}\nServers: ${info.guilds}\nMembers: ${info.members}`,
-          inline: true,
         },
       ]);
     });
 
-    await message.reply({ embeds: [embed] });
+    message.reply({ embeds: [embed] });
   }
 
-  // Commande `!srvshard`
+  // Commande `!srvshard` - Liste des serveurs gérés par chaque shard
   if (message.content === "!srvshard") {
-    // Vérifie si l'utilisateur est whitelisté
     if (message.author.id !== OWNER_ID) {
       return message.reply("You do not have permission to use this command.");
     }
 
-    // Collecte des serveurs gérés par chaque shard
-    const serverList = await manager.broadcastEval(client => {
-      return client.guilds.cache.map(guild => guild.name);
+    const shardServerCount = await manager.broadcastEval(client => client.guilds.cache.size);
+
+    let response = "Servers managed by each shard:\n";
+    shardServerCount.forEach((count, idx) => {
+      response += `Shard ${idx}: ${count} server(s)\n`;
     });
 
-    // Création d'un embed pour afficher les serveurs
-    const embed = new EmbedBuilder()
-      .setTitle("Servers Managed by Each Shard")
-      .setColor("Purple");
-
-    serverList.forEach((servers, index) => {
-      embed.addFields({
-        name: `Shard ${index}`,
-        value: servers.length > 0 ? servers.join("\n") : "No servers managed",
-        inline: false,
-      });
-    });
-
-    await message.reply({ embeds: [embed] });
-  }
-
-  // Commande `!shardinfo`
-  if (message.content === "!shardinfo") {
-    const shardInfo = await manager.broadcastEval(client => ({
-      id: client.shard?.ids[0],
-      guilds: client.guilds.cache.size,
-      members: client.guilds.cache.reduce((acc, guild) => acc + guild.memberCount, 0),
-    }));
-
-    const embed = new EmbedBuilder()
-      .setTitle("Detailed Shard Information")
-      .setColor("Green");
-
-    shardInfo.forEach(info => {
-      embed.addFields([
-        {
-          name: `Shard ${info.id}`,
-          value: `Servers: ${info.guilds}\nMembers: ${info.members}`,
-          inline: true,
-        },
-      ]);
-    });
-
-    await message.reply({ embeds: [embed] });
-  }
-
-  // Commande `!statusshard`
-  if (message.content === "!statusshard") {
-    const embed = new EmbedBuilder()
-      .setTitle("Shard Status")
-      .setColor("Yellow");
-
-    shardStatuses.forEach((status, id) => {
-      embed.addFields([{ name: `Shard ${id}`, value: `Status: ${status}`, inline: true }]);
-    });
-
-    await message.reply({ embeds: [embed] });
-  }
-
-  // Commande `!restartshard <id>`
-  if (message.content.startsWith("!restartshard")) {
-    const args = message.content.split(" ");
-    if (args.length !== 2 || isNaN(Number(args[1]))) {
-      return message.reply("Usage: `!restartshard <id>` where `<id>` is the ID of the shard to restart.");
-    }
-
-    const shardId = parseInt(args[1], 10);
-    if (shardId < 0 || shardId >= shardCount) {
-      return message.reply("The shard ID is invalid.");
-    }
-
-    try {
-      await manager.shards.get(shardId)?.respawn();
-      shardStatuses[shardId] = "Restarting";
-      message.reply(`Shard ${shardId} has been successfully restarted.`);
-    } catch (error) {
-      console.error(`Error while restarting shard ${shardId}:`, error);
-      message.reply(`Error while restarting shard ${shardId}.`);
-    }
-  }
-
-  // Commande `!helpshard`
-  if (message.content === "!helpshard") {
-    const embed = new EmbedBuilder()
-      .setTitle("Shard Commands Help")
-      .setDescription("Here are the available shard commands:")
-
-    embed.addFields(
-      {
-        name: "!shard",
-        value: "Displays shard information, including status, number of servers, and members.",
-        inline: false,
-      },
-      {
-        name: "!shardinfo",
-        value: "Displays detailed shard information, including number of servers and members.",
-        inline: false,
-      },
-      {
-        name: "!statusshard",
-        value: "Displays the status of all shards.",
-        inline: false,
-      },
-    );
-
-    // Ajouter des commandes whitelistées si l'utilisateur est le propriétaire
-    if (message.author.id === OWNER_ID) {
-      embed.addFields(
-        {
-          name: "!restartshard <id>",
-          value: "Restarts a specific shard by its ID. Requires whitelist permission.",
-          inline: false,
-        },
-        {
-          name: "!srvshard",
-          value: "Lists all the servers managed by each shard. Requires whitelist permission.",
-          inline: false,
-        },
-      );
-    } else {
-      embed.addFields(
-        {
-          name: "Whitelist Command",
-          value: "You need to be whitelisted (owner) to use some of these commands.",
-          inline: false,
-        }
-      );
-    }
-
-    await message.reply({ embeds: [embed] });
+    message.reply(response);
   }
 });
 
-client.login(TOKEN).catch(console.error);
+// Connexion du bot
+client.login(TOKEN).catch((err) => {
+  console.error("[Bot] Login failed:", err);
+});

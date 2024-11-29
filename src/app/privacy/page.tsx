@@ -4,7 +4,7 @@ import { Container } from "@mui/material";
 
 export const metadata: Metadata = {
   title: "Conditions Générales d'Utilisation",
-  description: "Conditions Générales d'Utilisation du bot Discord Morgane Ai",
+  description: "Conditions Générales d'Utilisation du bot Discord Ketsuna",
 };
 
 export default function Home() {
@@ -15,14 +15,14 @@ export default function Home() {
         <ol>
           <li>
             <h3>Acceptation des conditions d'utilisation</h3>
-            En utilisant le bot Discord Morgane Ai, vous acceptez sans réserve les
+            En utilisant le bot Discord Ketsuna, vous acceptez sans réserve les
             présentes conditions d'utilisation. Si vous n'êtes pas d'accord avec
             l'une des dispositions énoncées ici, veuillez cesser d'utiliser le
             bot immédiatement.
           </li>
           <li>
             <h3>Collecte de données</h3>
-            Morgane Ai s'engage à ne collecter aucune donnée personnelle des
+            Ketsuna s'engage à ne collecter aucune donnée personnelle des
             utilisateurs. Nous ne sauvegardons, n'enregistrons ni ne stockons
             aucune information personnelle identifiable. Toutes les interactions
             avec le bot sont anonymes.
@@ -30,7 +30,7 @@ export default function Home() {
           <li>
             <h3>Utilisation appropriée</h3>
             Les utilisateurs sont tenus de respecter les règles de conduite
-            appropriées lorsqu'ils interagissent avec Morgane Ai. Cela inclut, mais
+            appropriées lorsqu'ils interagissent avec Ketsuna. Cela inclut, mais
             sans s'y limiter, l'absence de contenu offensant, abusif,
             discriminatoire, illégal, ou contraire aux directives de Discord.
             Nous nous réservons le droit de bloquer l'accès à notre bot à tout
@@ -38,15 +38,15 @@ export default function Home() {
           </li>
           <li>
             <h3>Responsabilité</h3>
-            Morgane Ai est fourni "tel quel" sans aucune garantie, expresse ou
-            implicite. En aucun cas, les développeurs de Morgane Ai ne pourront
+            Ketsuna est fourni "tel quel" sans aucune garantie, expresse ou
+            implicite. En aucun cas, les développeurs de Ketsuna ne pourront
             être tenus responsables des dommages directs, indirects,
             accidentels, spéciaux, exemplaires ou consécutifs découlant de
             l'utilisation ou de l'impossibilité d'utiliser ce bot.
           </li>
           <li>
             <h3>Modifications</h3>
-            Les développeurs de Morgane Ai se réservent le droit de modifier les
+            Les développeurs de Ketsuna se réservent le droit de modifier les
             conditions d'utilisation à tout moment. Les utilisateurs seront
             informés des changements via les canaux appropriés de Discord. Il
             incombe aux utilisateurs de consulter régulièrement les conditions
@@ -56,12 +56,12 @@ export default function Home() {
             <h3>Contact</h3>
             Pour toute question, préoccupation ou rapport de violation des
             conditions d'utilisation, veuillez nous contacter par email à
-            contact@hohotutecalme.fr ou en rejoignant{" "}
-            <a href="https://discord.gg/2U6Q9aKHSE">Le serveur support</a>.
+            contact@jeremysoler.com ou en rejoignant{" "}
+            <a href="https://discord.gg/d7QvY6TwwN">Le serveur support</a>.
           </li>
         </ol>
         <p>
-          En utilisant Morgane Ai, vous confirmez que vous avez lu et compris ces
+          En utilisant Ketsuna, vous confirmez que vous avez lu et compris ces
           conditions d'utilisation et que vous vous engagez à les respecter.
         </p>
         <p>
