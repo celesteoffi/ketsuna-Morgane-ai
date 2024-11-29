@@ -54,7 +54,7 @@ client.on("messageCreate", async (message) => {
 
       // Création de l'embed avec le numéro du shard
       const embed = new EmbedBuilder()
-        .setTitle("Shard Information for Command")
+        .setTitle("Shard Information")
         .setColor("Blue")
         .setDescription(`This command was executed on shard **${shardId}**.`);
 
