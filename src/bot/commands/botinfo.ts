@@ -52,11 +52,11 @@ export class BotInfoCommand extends CommandsBase {
         },
         {
           name: "📋 General Information",
-          value: `**Bot Name:** ${bot.username}\n**ID:** ${bot.id}\n**Uptime:** ${uptime}s`,
+          value: `**Bot Name:** ${bot.username}\n**ID:** ${bot.id}\n**Shard ID:** ${shardId}\n**Uptime:** ${uptime}s`,
         },
         {
           name: "🔧 Complementary Information",
-          value: `**Servers:** ${serverCount}\n**Users:** ${totalUsers}\n**Roles:** ${totalRoles}\n**Channels:** ${totalChannels}\n**Boosts:** ${boostCount}\n**Emojis:** ${totalEmojis}\n**Shard ID:** ${shardId}`,
+          value: `**Servers:** ${serverCount}\n**Users:** ${totalUsers}\n**Roles:** ${totalRoles}\n**Channels:** ${totalChannels}\n**Boosts:** ${boostCount}\n**Emojis:** ${totalEmojis}`,
         },
         {
           name: "💻 Technical Information",
