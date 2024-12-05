@@ -66,11 +66,11 @@ export default class Bot extends Client {
     this.on(Events.ClientReady, () => {
       console.log("Bot is ready!");
       this.loadCommands();
-      if (this.application.id === "1100859965616427068") {
+      if (this.application.id === "1190014646351036577") {
         this.on(Events.EntitlementCreate, async (entitlement) => {
           let user = await entitlement.fetchUser()
           // send message on support server
-          this.channels.fetch("1308754491134316564").then((channel) => {
+          this.channels.fetch("1312408529507713066").then((channel) => {
             if(!channel.isTextBased()) return;
             channel.send({
               content: `<@${entitlement.userId}> (${user.tag}) has purchased Morgane AI  Premium!`,
@@ -79,11 +79,11 @@ export default class Bot extends Client {
   
           // send dm to user
           user.send({
-            content: `If you are not yet in the support server, please join it here: https://discord.gg/2U6Q9aKHSE \n\n This way we can give you your Rewards for suscribing to Morgane AI  Premium!`,
+            content: `If you are not yet in the support server, please join it here: https://discord.gg/Usc9ZY6W \n\n This way we can give you your Rewards for suscribing to Morgane AI  Premium!`,
             embeds: [
                 {
                   title: "Join the Support Server",
-                  url: "https://discord.gg/2U6Q9aKHSE",
+                  url: "https://discord.gg/Usc9ZY6W",
                   description: `Thank you for purchasing Morgane AI  Premium! You need to be Logged in to the bot to use it.\nPlease use </ai login:${this.commands.get("ai").command.id} to login to the bot.`
                 }
               ]

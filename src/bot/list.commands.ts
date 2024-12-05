@@ -9,4 +9,4 @@ export * from "./commands/vote";
 export * from "./commands/aiinfo";
 export * from "./commands/worker";
 export * from "./commands/help";
-export * from "./commands/shard";
+export * from "./commands/shardstats";

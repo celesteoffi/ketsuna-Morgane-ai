@@ -1,6 +1,7 @@
 import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
+import { isBlacklisted } from "../../utils/blacklist";  // Assure-toi que cette fonction est importée
 
 const commandData = new SlashCommandBuilder()
   .setName("botinfo")
@@ -12,6 +13,14 @@ export class BotInfoCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction) {
+    // Vérifier si l'utilisateur est blacklisté
+    if (isBlacklisted(interaction.user.id)) {
+      return interaction.reply({
+        content: "You are blacklisted and cannot use this command.",
+        ephemeral: true,  // Message visible uniquement pour l'utilisateur
+      });
+    }
+
     const bot = interaction.client.user!;
     const botCreatedAt = bot.createdAt.toDateString();
     const uptime = Math.floor(interaction.client.uptime! / 1000);
