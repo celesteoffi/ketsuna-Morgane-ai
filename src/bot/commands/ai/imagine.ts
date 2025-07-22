@@ -26,7 +26,7 @@ export default async function Imagine(
   interaction: CommandInteraction
 ) {
   const userDatabase = await getUser(interaction.user.id, command.client.database)
-  let defaultToken = 'pAI2LCzHYsAwYoCTkDtCLQ'
+  let defaultToken = '0000000000'
   if (userDatabase && userDatabase.horde_token) {
     defaultToken = command.client.decryptString(userDatabase.horde_token)
   }
