@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import Bot from "./bot"; // Assure-toi que la classe Bot est bien définie pour gérer ton bot
+import Bot from "./bot/index.js"; // Assure-toi que la classe Bot est bien définie pour gérer ton bot
 import fastify from "fastify";
 import { PrismaClient } from "@prisma/client";
 import { PrismaLibSQL } from "@prisma/adapter-libsql";
