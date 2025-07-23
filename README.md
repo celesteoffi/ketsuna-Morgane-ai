@@ -145,6 +145,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 - [garder500](https://github.com/garder500) - creator and maintainer
 - [trail-l31](https://github.com/trail-l31) - contributor
+- [celesteoffi](https://github.com/celesteoffi) - Keeps the script working
 
 ## License
 
