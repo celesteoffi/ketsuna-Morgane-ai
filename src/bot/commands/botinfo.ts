@@ -1,7 +1,6 @@
 import { CommandInteraction, SlashCommandBuilder, EmbedBuilder } from "discord.js";
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
-import { isBlacklisted } from "../../utils/blacklist";  // Assure-toi que cette fonction est importée
 
 const commandData = new SlashCommandBuilder()
   .setName("botinfo")
@@ -13,13 +12,6 @@ export class BotInfoCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction) {
-    // Vérifier si l'utilisateur est blacklisté
-    if (isBlacklisted(interaction.user.id)) {
-      return interaction.reply({
-        content: "You are blacklisted and cannot use this command.",
-        ephemeral: true,  // Message visible uniquement pour l'utilisateur
-      });
-    }
 
     const bot = interaction.client.user!;
     const botCreatedAt = bot.createdAt.toDateString();
@@ -41,8 +33,8 @@ export class BotInfoCommand extends CommandsBase {
     );
 
     const developerName = "Céleste";
-    const developerId = "1185603511577235572";
-    const developerCreatedAt = "16 déc. 2023"; // Remplacez par la date réelle si connue
+    const developerId = "1346380213587673119";
+    const developerCreatedAt = "4 Mars 2025"; // Remplacez par la date réelle si connue
 
     const shardId = interaction.guild?.shardId ?? 0; // Identifiant de la shard où la commande est exécutée
 

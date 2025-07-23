@@ -20,7 +20,6 @@ import Advanced from "./ai/advanced";
 import Give from "./ai/give";
 import { bt } from "../../main";
 import Config from "./ai/config";
-import { isBlacklisted } from "../../utils/blacklist";  // Assure-toi que cette fonction est importée
 
 
 const commandData = new SlashCommandBuilder()
@@ -744,15 +743,6 @@ export class IaCommand extends CommandsBase {
 
  async run(interaction: CommandInteraction) {
     let options = interaction.options;
-    
-    // Vérification de la blacklist
-    if (isBlacklisted(interaction.user.id)) {
-      return interaction.reply({
-        content: "You are blacklisted and cannot use this command.",
-        ephemeral: true,
-      });
-    }
-
     if (options instanceof CommandInteractionOptionResolver) {
       let subcommand = options.getSubcommandGroup() ?? options.getSubcommand();
       switch (subcommand) {

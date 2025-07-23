@@ -6,7 +6,6 @@ import {
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
 import { bt } from "../../main";
-import { isBlacklisted } from "../../utils/blacklist";
 
 const commandData = new SlashCommandBuilder()
   .setName("shardstats")
@@ -18,13 +17,6 @@ export class ShardStatsCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction) {
-    // Vérification si l'utilisateur est blacklisté
-    if (isBlacklisted(interaction.user.id)) {
-      return interaction.reply({
-        content: "You are blacklisted and cannot use this command.",
-        ephemeral: true,
-      });
-    }
 
     await interaction.deferReply(); // Déclare que le bot traite la commande
 

@@ -2,7 +2,6 @@ import { CommandInteraction, SlashCommandBuilder } from "discord.js";
 import CommandsBase from "./baseCommands";
 import Bot from "../index";
 import { bt } from "../../main";
-import { isBlacklisted } from "../../utils/blacklist";  // Importer la fonction de vérification de blacklist
 
 // Commande pour afficher l'avatar de l'utilisateur
 const commandData = new SlashCommandBuilder()
@@ -15,14 +14,6 @@ export class AvatarCommand extends CommandsBase {
   }
 
   async run(interaction: CommandInteraction) {
-    // Vérifier si l'utilisateur est blacklisté
-    if (isBlacklisted(interaction.user.id)) {
-      return interaction.reply({
-        content: "You are blacklisted and cannot use this command.",
-        ephemeral: true,  // Message visible uniquement pour l'utilisateur
-      });
-    }
-
     // Si l'utilisateur n'est pas blacklisté, continuer avec la commande
     const i = await interaction.deferReply();
 
