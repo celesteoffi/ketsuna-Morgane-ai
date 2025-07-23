@@ -65,6 +65,35 @@ Now you can follow the installation instructions
     OWNER_ID=
 ```
 
+Check that the `.swcrc` file is created in the root directory and fill it with the following variables:
+
+```
+{
+  "jsc": {
+    "target": "es2020",
+    "parser": {
+      "syntax": "typescript",
+      "tsx": false,
+      "decorators": true,
+      "dynamicImport": true
+    },
+    "transform": {
+      "react": {
+        "runtime": "automatic"
+      }
+    }
+  },
+  "module": {
+    "type": "commonjs",
+    "strict": true,
+    "strictMode": true,
+    "noInterop": false
+  },
+  "minify": false,
+  "sourceMaps": true
+}
+```
+
 4. Run the database migrations with `pnpm migrate` (this will create the database tables)
 5. Build the project with `pnpm build`
 6. Run the project with `pnpm start` or `node dist/main.js` or with pm2 `pm2 start npm --name "your-app-name" -- start`
