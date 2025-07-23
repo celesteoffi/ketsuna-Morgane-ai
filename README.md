@@ -5,9 +5,9 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 
 # Morgane Ai Information : 
 
-Support : https://discord.gg/2U6Q9aKHSE
-Top.gg : https://top.gg/fr/bot/1190014646351036577
-Invitation link: https://discord.com/oauth2/authorize?client_id=1190014646351036577&permissions=551903627328&scope=bot
+- Support : https://discord.gg/2U6Q9aKHSE
+- Top.gg : https://top.gg/fr/bot/1190014646351036577
+- Invitation link: https://discord.com/oauth2/authorize?client_id=1190014646351036577&permissions=551903627328&scope=bot
 
 ## Features
 
