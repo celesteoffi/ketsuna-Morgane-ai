@@ -11,3 +11,4 @@ export * from "./commands/help";
 export * from "./commands/shardstats";
 export * from "./commands/botstats";
 export * from "./commands/uptime";
+export * from "./commands/animate";

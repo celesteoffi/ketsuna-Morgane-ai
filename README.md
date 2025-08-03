@@ -33,14 +33,21 @@ The Front-end is built with [React](https://reactjs.org/) and [Next.js](https://
 	- You can now install the Node.js package the same way you did in the previous section: 
 	-`sudo apt install nodejs`
 
-2. Prisma
+2. Dependencie 
+  - `apt install ffmpeg -y`
+  - `sudo curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp \
+    -o /usr/local/bin/yt-dlp
+    sudo chmod a+rx /usr/local/bin/yt-dlp
+    yt-dlp --version`
+
+3. Prisma
 	- Normally no manual installation required
 
-3. 
+4. 
 	- regular version of pnpm, which needs Node.js to work.
 	- `npm install -g pnpm or npm install -g @pnpm/exe`
 
-4. I advise you to install pm2 
+5. I advise you to install pm2 
 	- `npm install pm2 -g`
 
 Now you can follow the installation instructions
@@ -95,7 +102,7 @@ Check that the `.swcrc` file is created in the root directory and fill it with t
 ```
 
 4. Run the database migrations with `pnpm migrate` (this will create the database tables)
-5. Build the project with `pnpm build`
+5. Build the project with `pnpm build` and `pnpm add sharp`
 6. Run the project with `pnpm start` or `node dist/main.js` or with pm2 `pm2 start npm --name "your-app-name" -- start`
 6. Run the project with Shards with `node dist/shard.js` or with pm2 `pm2 start dist/shard.js --name "shardingstarting" -- start`
 
