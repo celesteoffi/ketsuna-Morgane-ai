@@ -62,19 +62,19 @@ AI assistant full-stack clés en main.
 
 ## Commandes Discord
 
-`/ia imagine <prompt>	Image IA`
-`/ia animate	Diaporama + musique YouTube`
-`/ia ask	Réponse texte`
-`/ia login / logout	Lier compte StableHorde`
-`/ia give	Donner des kudos`
-`/ia config	Préférences`
-`/ia help	Aide détaillée`
+- `/ia imagine <prompt>	Image IA`
+- `/ia animate	Diaporama + musique YouTube`
+- `/ia ask	Réponse texte`
+- `/ia login / logout	Lier compte StableHorde`
+- `/ia give	Donner des kudos`
+- `/ia config	Préférences`
+- `/ia help	Aide détaillée`
 
 ## Routes Web
-URL	Description
-/	Accueil
-/cgu	Conditions d’utilisation
-/privacy	Politique confidentialité
+
+- /	Accueil
+- /cgu	Conditions d’utilisation
+- /privacy	Politique confidentialité
 
 ## Installation Ubuntu/Debian
 
